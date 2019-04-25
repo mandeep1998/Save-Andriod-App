@@ -1,4 +1,4 @@
-package com.example.ave;
+package com.example.ave.LoginAndMain;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.ave.DashboardScreen.DashboardScreen;
+import com.example.ave.NotificationsScreen.NotificationScreen;
+import com.example.ave.R;
+import com.example.ave.SettingsScreen.SettingsPage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -18,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTextMessage;
     private FirebaseAuth firebaseAuth;
     private Button Logout_btn;
-
+    private ListView transactionView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -26,14 +31,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                   //Nothing here because we are on main page
+                    //leave blank so user cant spam home button
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                  startActivity(new Intent(getApplicationContext(), DashboardScreen.class));
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    startActivity(new Intent(getApplicationContext(), NotificationScreen.class));
                     return true;
+                case R.id.navigation_settings:
+                    startActivity(new Intent (getApplicationContext(), SettingsPage.class));
             }
             return false;
         }
@@ -45,14 +53,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
-            startActivity(new Intent(this,mainLogin.class));
+            startActivity(new Intent(this, mainLogin.class));
         }
         FirebaseUser user= firebaseAuth.getCurrentUser();
-        Logout_btn = (Button) findViewById(R.id.Logout_btn);
-        Logout_btn.setOnClickListener(this);
+       // Logout_btn = (Button) findViewById(R.id.Logout_btn);
+//        Logout_btn.setOnClickListener(this);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
