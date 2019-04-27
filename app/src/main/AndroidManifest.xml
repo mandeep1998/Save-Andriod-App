@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".DashboardScreen.DashboardScreen"></activity>
+        <activity android:name=".NotificationsScreen.NotificationScreen" />
+        <activity android:name=".SettingsScreen.SettingsPage" />
         <activity
-            android:name=".mainLogin"
+            android:name=".LoginAndMain.mainLogin"
             android:label="$ave">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginAndMain.MainActivity"
             android:label="$ave">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
