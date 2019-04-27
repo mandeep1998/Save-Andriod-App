@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         DatabaseSql DB=new DatabaseSql();
 
+
         addB=(Button) findViewById(R.id.addB);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

@@ -6,20 +6,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.ave.MainActivity;
+import com.example.ave.mainLogin;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class DatabaseSql extends AppCompatActivity {
    private FirebaseAuth firebaseAuth;
+   private FirebaseFirestore firestore;
+   private mainLogin login;
     private String email;
     private String password;
     private boolean check=false;
-    private Boolean checkr;
+    private boolean checkr=false;
+
     public DatabaseSql()
     {
         firebaseAuth= firebaseAuth.getInstance();
+        firestore=FirebaseFirestore.getInstance();
 
     }
 
@@ -27,36 +40,10 @@ public class DatabaseSql extends AppCompatActivity {
     {
         return firebaseAuth;
     }
-    public void signin(String email, String password)
-    {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+    public FirebaseFirestore getfire() {return firestore;}
 
-                            finish();
-                        }
-                    }
-                });
-    }
 
-    public Boolean register(String email,String password)
-    {
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                //progressDialog.dismiss();
-                if(task.isSuccessful()){
 
-                    //Toast.makeText(mainLogin.this,"Reg Successfully", Toast.LENGTH_SHORT).show();
-                    checkr=true;
-                } else {
-                    //Toast.makeText(mainLogin.this," Try again",Toast.LENGTH_SHORT).show();
-                    checkr=false;
-                }
-            }
-        });
-        return checkr;
-    }
+
+
 }
