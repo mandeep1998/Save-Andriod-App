@@ -1,4 +1,4 @@
-package com.example.ave.LoginAndMain;
+package com.example.ave;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,19 +11,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.ave.DashboardScreen.DashboardScreen;
-import com.example.ave.NotificationsScreen.NotificationScreen;
-import com.example.ave.R;
-import com.example.ave.SettingsScreen.SettingsPage;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.ave.Database.DatabaseSql;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity{
 
-    private TextView mTextMessage;
-    private FirebaseAuth firebaseAuth;
-    private Button Logout_btn;
     private ListView transactionView;
+    private Button addB;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -51,28 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DatabaseSql DB=new DatabaseSql();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() == null){
-            startActivity(new Intent(this, mainLogin.class));
-        }
-        FirebaseUser user= firebaseAuth.getCurrentUser();
-       // Logout_btn = (Button) findViewById(R.id.Logout_btn);
-//        Logout_btn.setOnClickListener(this);
-
+        addB=(Button) findViewById(R.id.addB);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 
-    @Override
-    public void onClick(View v) {
-if (v == Logout_btn){
-    firebaseAuth.signOut();
-    finish();
-    startActivity(new Intent(this, mainLogin.class));
 
-}
-    }
 }

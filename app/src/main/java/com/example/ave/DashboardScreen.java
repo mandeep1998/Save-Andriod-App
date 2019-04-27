@@ -1,4 +1,4 @@
-package com.example.ave.DashboardScreen;
+package com.example.ave;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.ave.LoginAndMain.MainActivity;
-import com.example.ave.NotificationsScreen.NotificationScreen;
+import com.example.ave.MainActivity;
+import com.example.ave.NotificationScreen;
 import com.example.ave.R;
-import com.example.ave.SettingsScreen.SettingsPage;
+import com.example.ave.SettingsPage;
 
 public class DashboardScreen extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
