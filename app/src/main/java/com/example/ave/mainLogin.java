@@ -156,7 +156,7 @@ public class mainLogin extends AppCompatActivity implements View.OnClickListener
         HashMap<String,String> hash= new HashMap<>();
         hash.put("EmailID",email);
 
-        Db.getfire().collection("Users").document(email).set(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Db.getfire().collection("UsersInfo").document(email).set(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e("TAG","Successfully written");

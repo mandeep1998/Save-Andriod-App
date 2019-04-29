@@ -14,9 +14,6 @@
         <activity android:name=".DashboardScreen"></activity>
         <activity android:name=".NotificationScreen" />
         <activity android:name=".SettingsPage" />
-        <activity android:name=".BudgetPop"
-            android:theme="@style/AppTheme.PopTheme">
-        </activity>
         <activity
             android:name=".mainLogin"
             android:label="$ave">

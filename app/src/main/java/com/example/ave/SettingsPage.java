@@ -10,16 +10,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ave.Database.DatabaseSql;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SettingsPage extends AppCompatActivity {
-private ListView listView;
+
 private Button logoutButton;
-private ArrayList<String> list = new ArrayList<>();
+private Button monthlyB;
+private Button weeklyB;
+private EditText budgetInput;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -46,6 +52,10 @@ private ArrayList<String> list = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_page);
         final DatabaseSql DB= new DatabaseSql();
+        weeklyB=(Button)findViewById(R.id.weeklyB);
+        monthlyB=(Button) findViewById(R.id.monthlyB);
+        budgetInput=(EditText)findViewById(R.id.editText);
+
         logoutButton=(Button)findViewById(R.id.logout_button) ;
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,31 +66,50 @@ private ArrayList<String> list = new ArrayList<>();
             }
         });
 
-        listView=(ListView) findViewById(R.id.listView);
-        fillList();
-        ArrayAdapter adapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,list);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        weeklyB.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item=listView.getItemAtPosition(position).toString();
-                if(item=="Update Budget") {
-                    startActivity(new Intent(getApplicationContext(), BudgetPop.class));
+            public void onClick(View v) {
+                String budget=budgetInput.getText().toString();
+                String weekly="weekly";
+                String email=DB.getAuth().getCurrentUser().getEmail();
+                HashMap hash= new HashMap();
+                hash.put("Budget",budget);
+                hash.put("Type",weekly);
+                if(!(budget==null))
+                {
+                    DB.getfire().collection("UsersInfo").document(email).set(hash);
+                }
+                else
+                {
+                    Toast.makeText(SettingsPage.this,"Please enter a budget", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        monthlyB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String budget=budgetInput.getText().toString();
+                String monthly="monthly";
+                String email=DB.getAuth().getCurrentUser().getEmail();
+                HashMap hash= new HashMap();
+                hash.put("Budget",budget);
+                hash.put("Type",monthly);
+                if(!(budget==null))
+                {
+                    DB.getfire().collection("UsersInfo").document(email).set(hash);
+                }
+                else
+                {
+                    Toast.makeText(SettingsPage.this,"Please enter a budget before clicking", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 
-    public void fillList()
-    {
-        list.add("Update Budget");
-        list.add("Notification Settings");
-        list.add("Update Email");
-        list.add("Change Username");
-        list.add("Change Password");
-    }
+
 }
