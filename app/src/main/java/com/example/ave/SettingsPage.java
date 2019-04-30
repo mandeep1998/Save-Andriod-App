@@ -1,10 +1,12 @@
 package com.example.ave;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -70,6 +72,7 @@ private EditText budgetInput;
             @Override
             public void onClick(View v) {
                 String budget=budgetInput.getText().toString();
+                Log.e("Budget",budget);
                 String weekly="weekly";
                 String email=DB.getAuth().getCurrentUser().getEmail();
                 HashMap hash= new HashMap();
@@ -77,7 +80,7 @@ private EditText budgetInput;
                 hash.put("Type",weekly);
                 if(!(budget==null))
                 {
-                    DB.getfire().collection("UsersInfo").document(email).set(hash);
+                    DB.getfire().collection(email).document("Budget").set(hash);
                 }
                 else
                 {
@@ -97,7 +100,8 @@ private EditText budgetInput;
                 hash.put("Type",monthly);
                 if(!(budget==null))
                 {
-                    DB.getfire().collection("UsersInfo").document(email).set(hash);
+                    DB.getfire().collection(email).document("Budget").set(hash);
+                    Toast.makeText(SettingsPage.this,"Budget has been added!",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

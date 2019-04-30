@@ -153,10 +153,11 @@ public class mainLogin extends AppCompatActivity implements View.OnClickListener
 
     public void write(String email)
     {
+        /*
         HashMap<String,String> hash= new HashMap<>();
         hash.put("EmailID",email);
 
-        Db.getfire().collection("UsersInfo").document(email).set(hash).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Db.getfire().collection(email).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e("TAG","Successfully written");
@@ -166,7 +167,7 @@ public class mainLogin extends AppCompatActivity implements View.OnClickListener
             public void onFailure(@NonNull Exception e) {
                 Log.e("TAG","error");
             }
-        });
+        });*/
     }
 
 }
