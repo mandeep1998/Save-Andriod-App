@@ -27,6 +27,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +37,13 @@ public class MainActivity extends AppCompatActivity{
     private Button addB;
     private TextView budgetText,remainingText;
     private String budget;
-    private double remaining=0;
     private ListView listView;
     private EditText amountInput,storeInput;
     private String email;
+    private String DBremaining;
+    private  List<DocumentSnapshot> expenses;
     private ArrayList<String> expenseList=new ArrayList<>();
+    private ArrayList<String> amountList=new ArrayList<>();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -79,25 +82,28 @@ public class MainActivity extends AppCompatActivity{
         addB=(Button) findViewById(R.id.addB);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //setRemaining();
         addB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amount=amountInput.getText().toString();
                 String store=storeInput.getText().toString();
-                if(amount == null||store==null)
-                {
-                    Toast.makeText(MainActivity.this, "Please enter in amount and store",Toast.LENGTH_SHORT).show();
+
+                if(!(amount.isEmpty())||!(store.isEmpty())) {
+                    String stores = (store + " $" + amount);
+                    HashMap hash = new HashMap();
+                    hash.put("amount", amount);
+                    hash.put("listStore", stores);
+                    hash.put("Store", store);
+                    DB.getfire().collection(email).add(hash);
+                    Toast.makeText(MainActivity.this, "Expense Successfully added", Toast.LENGTH_SHORT).show();
+                    loadList();
                 }
                 else
                 {
-                    String stores=(store+ " $"+amount);
-                    HashMap hash=new HashMap();
-                    hash.put("amount",amount);
-                    hash.put("Store",stores);
-                    DB.getfire().collection(email).add(hash);
-                    Toast.makeText(MainActivity.this, "Expense Successfully added",Toast.LENGTH_SHORT).show();
-                    loadList();
+                    Toast.makeText(MainActivity.this, "Please enter in amount and store",Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
@@ -129,42 +135,50 @@ public void getBudget()
 
 public void loadList()
 {
+
     DB.getfire().collection(email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
         @Override
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-            List<DocumentSnapshot> expenses=task.getResult().getDocuments();
-            setRemaining(expenses);
+            expenses=task.getResult().getDocuments();
+            for(int i=1; i<expenses.size();i++)
+            {
+                expenseList.add(expenses.get(i).getString("listStore"));
+                amountList.add(expenses.get(i).getString("amount"));
+                ListAdapter adapter= new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,expenseList);
+                listView.setAdapter(adapter);
+                setRemaining();
+
+            }
+
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
 
         }
     });
 
 }
 
-
-public void setRemaining(List<DocumentSnapshot> expenses)
+public void getAmountList(ArrayList<String> array)
 {
-    expenseList.clear();
-    for(int i=1;i<expenses.size();i++) {
+    amountList= (ArrayList<String>) array.clone();
+}
+public void setRemaining()
+{
 
-        expenseList.add(expenses.get(i).getString("Store"));
-        if(expenses.get(i).getString("amount") !=null)
-        {
-            String temp1 = expenses.get(i).getString("amount");
-            remaining+= Double.parseDouble(temp1);
-        }
+    Double remaining=0.0;
+   for(int i=0;i<amountList.size();i++) {
+       remaining+=Double.parseDouble(amountList.get(i));
+   }
+   Log.e("TAG", remaining + "");
+    if (budget == null) {
 
+    } else {
+        String remain;
+        remain= String.valueOf(Double.parseDouble(budget) - remaining);
+        Log.e("TAG", budget);
+        remainingText.setText(remain);
     }
-    ListAdapter adapter= new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,expenseList);
-    listView.setAdapter(adapter);
-    if(budget==null)
-    {
-
-    }
-    else
-    {
-        budget=String.valueOf(Double.parseDouble(budget)-remaining);
-        remainingText.setText(budget);
-    }
-
 }
 }

@@ -78,6 +78,7 @@ public class mainLogin extends AppCompatActivity implements View.OnClickListener
         }
         else
         {
+            progressDialog.dismiss();
            Toast.makeText(this, "Invalid login",Toast.LENGTH_SHORT).show();
         }
 

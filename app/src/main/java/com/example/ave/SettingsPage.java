@@ -78,9 +78,10 @@ private EditText budgetInput;
                 HashMap hash= new HashMap();
                 hash.put("Budget",budget);
                 hash.put("Type",weekly);
-                if(!(budget==null))
+                if(!(budget.isEmpty()))
                 {
                     DB.getfire().collection(email).document("Budget").set(hash);
+                    Toast.makeText(SettingsPage.this,"Budget has been added!",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -98,7 +99,7 @@ private EditText budgetInput;
                 HashMap hash= new HashMap();
                 hash.put("Budget",budget);
                 hash.put("Type",monthly);
-                if(!(budget==null))
+                if(!(budget.isEmpty()))
                 {
                     DB.getfire().collection(email).document("Budget").set(hash);
                     Toast.makeText(SettingsPage.this,"Budget has been added!",Toast.LENGTH_SHORT).show();
