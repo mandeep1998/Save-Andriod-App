@@ -80,7 +80,9 @@ public class DashboardScreen extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<DocumentSnapshot> snap= task.getResult().getDocuments();
                 loadchart(snap);
-                snap.get(0).getString("Budget");
+                if(snap.size()!=0) {
+                    snap.get(0).getString("Budget");
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -140,8 +142,14 @@ public class DashboardScreen extends AppCompatActivity {
         {
              score+=Double.parseDouble(amountList.get(i));
         }
-        score=score*Integer.parseInt(budget);
-        scoretext.setText(String.valueOf(score));
+        if(budget==null)
+        {
+
+        }
+        else {
+            score = score * Integer.parseInt(budget);
+            scoretext.setText(String.valueOf(score));
+        }
     }
     public void getBudget()
     {
