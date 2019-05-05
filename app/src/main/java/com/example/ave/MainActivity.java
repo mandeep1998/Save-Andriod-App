@@ -135,7 +135,7 @@ public void getBudget()
 
 public void loadList()
 {
-
+    expenseList.clear();
     DB.getfire().collection(email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
         @Override
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -166,6 +166,7 @@ public void getAmountList(ArrayList<String> array)
 }
 public void setRemaining()
 {
+
 
     Double remaining=0.0;
    for(int i=0;i<amountList.size();i++) {

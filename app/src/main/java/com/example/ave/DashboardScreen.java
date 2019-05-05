@@ -139,7 +139,9 @@ public class DashboardScreen extends AppCompatActivity {
         if (budget == null)
         {
     }
-        else { score = score * Integer.parseInt(budget);
+        else {
+            score = score /Integer.parseInt(budget);
+            score=Math.round(score*100);
         scoretext.setText(String.valueOf(score));
     }
 
