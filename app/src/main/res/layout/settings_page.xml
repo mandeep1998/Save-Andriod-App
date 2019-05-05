@@ -19,16 +19,18 @@
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_width="426dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_sim"
         android:text="Settings"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        app:fontFamily="sans-serif-medium"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="30sp"
+        app:fontFamily="@font/open_sans_semibold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,47 +39,66 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
+        android:background="@drawable/button_back"
         android:text="Logout"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        app:fontFamily="@font/open_sans_semibold"
+
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weeklyB" />
+        app:layout_constraintTop_toBottomOf="@+id/weeklyB"
+        app:layout_constraintVertical_bias="0.601" />
 
     <Button
         android:id="@+id/weeklyB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weekly"
+        android:layout_width="114dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_back"
+        android:text="Weekly Budget"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="23sp"
+
+        app:fontFamily="@font/open_sans_semibold"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toStartOf="@+id/monthlyB"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.164" />
+        app:layout_constraintTop_toBottomOf="@+id/nameView"
+        app:layout_constraintVertical_bias="0.141" />
 
     <Button
         android:id="@+id/monthlyB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Monthly"
+        android:layout_width="128dp"
+        android:layout_height="278dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_back"
+        android:text="Monthly   Budget"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="23sp"
+
+        app:fontFamily="@font/open_sans_semibold"
         app:layout_constraintBottom_toTopOf="@+id/logout_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/weeklyB"
         app:layout_constraintTop_toBottomOf="@+id/nameView"
-        app:layout_constraintVertical_bias="0.245" />
+        app:layout_constraintVertical_bias="0.264" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Enter Amount $"
         android:inputType="number"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/logout_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weeklyB" />
+        app:layout_constraintTop_toBottomOf="@+id/weeklyB"
+        app:layout_constraintVertical_bias="0.704" />
 
 </android.support.constraint.ConstraintLayout>

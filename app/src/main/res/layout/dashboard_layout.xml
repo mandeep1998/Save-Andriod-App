@@ -30,14 +30,17 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="$ave Score:"
-        android:textColor="@color/colorPrimary"
+        android:layout_width="198dp"
+        android:layout_height="42dp"
+        android:background="@drawable/button_sim"
+        android:text="  $ave Score:"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+
         android:textSize="30sp"
+        app:fontFamily="@font/open_sans_semibold"
         app:layout_constraintBottom_toTopOf="@+id/piechart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.581" />
