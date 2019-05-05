@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
@@ -26,11 +27,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
 
-            <EditText android:id="@+id/Email"
-                android:inputType="textEmailAddress"
+            <EditText
+                android:id="@+id/Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email" />
+                android:hint="Email"
+
+                android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -58,8 +61,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:background="@drawable/button_back"
             android:padding="12dp"
-            android:text="Login"/>
+            android:text="Login"
+            android:textColor="@android:color/white" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_reg"
@@ -68,7 +73,11 @@
             android:layout_marginTop="0.5dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Register" />
+            android:text="Register"
+            android:background="@drawable/button_back"
+
+            android:textColor="@android:color/white"
+            />
 
     </LinearLayout>
 </ScrollView>

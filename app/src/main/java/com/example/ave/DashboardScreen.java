@@ -32,9 +32,9 @@ import java.util.List;
 
 public class DashboardScreen extends AppCompatActivity {
     DatabaseSql DB = new DatabaseSql();
-    private String email=DB.getAuth().getCurrentUser().getEmail();
-    private ArrayList<PieEntry> chartarray= new ArrayList<>();
-    private ArrayList<String> amountList= new ArrayList<>();
+    private String email = DB.getAuth().getCurrentUser().getEmail();
+    private ArrayList<PieEntry> chartarray = new ArrayList<>();
+    private ArrayList<String> amountList = new ArrayList<>();
     private String budget;
     private List<PieEntry> data = new ArrayList<>();
     private PieChart expenseChart;
@@ -56,12 +56,13 @@ public class DashboardScreen extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), NotificationScreen.class));
                     return true;
                 case R.id.navigation_settings:
-                    startActivity(new Intent (getApplicationContext(), SettingsPage.class));
+                    startActivity(new Intent(getApplicationContext(), SettingsPage.class));
                     return true;
             }
             return false;
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,22 +71,25 @@ public class DashboardScreen extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         getData();
-        expenseChart=(PieChart)findViewById(R.id.piechart);
-        scoretext=(TextView) findViewById(R.id.score);
+        expenseChart = (PieChart) findViewById(R.id.piechart);
+        scoretext = (TextView) findViewById(R.id.score);
     }
 
     private void getData() {
         DB.getfire().collection(email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<DocumentSnapshot> snap= task.getResult().getDocuments();
+                List<DocumentSnapshot> snap = task.getResult().getDocuments();
                 loadchart(snap);
-                snap.get(0).getString("Budget");
+                if (snap.size() != 0) {
+                    snap.get(0).getString("Budget");
+
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(DashboardScreen.this, "Cannot connect to database at this time",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DashboardScreen.this, "Cannot connect to database at this time", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -93,38 +97,31 @@ public class DashboardScreen extends AppCompatActivity {
     private void loadchart(List<DocumentSnapshot> snap) {
 
         chartarray.clear();
-            for(int i=1;i<snap.size();i++)
-            {
-                if(snap.get(i).getString("Store")==null)
-                {
+        for (int i = 1; i < snap.size(); i++) {
+            if (snap.get(i).getString("Store") == null) {
 
-                }
-                else
-                {
-                    float amount=Float.parseFloat(snap.get(i).getString("amount"));
-                    String store= snap.get(i).getString("Store");
-                    amountList.add(String.valueOf(amount));
-                    PieEntry pie= new PieEntry(amount,store);
-                    if(getIndex(pie.getLabel()))
-                    {
+            } else {
+                float amount = Float.parseFloat(snap.get(i).getString("amount"));
+                String store = snap.get(i).getString("Store");
+                amountList.add(String.valueOf(amount));
+                PieEntry pie = new PieEntry(amount, store);
+                if (getIndex(pie.getLabel())) {
 
-                        float nAmount=amount + data.get(count).getValue();
+                    float nAmount = amount + data.get(count).getValue();
 
-                        PieEntry temp=new PieEntry(nAmount,store);
-                        data.remove(count);
-                        data.add(temp);
-                    }
-
-                    else {
-                        chartarray.add(pie);
-                        data.add(pie);
-                    }
+                    PieEntry temp = new PieEntry(nAmount, store);
+                    data.remove(count);
+                    data.add(temp);
+                } else {
+                    chartarray.add(pie);
+                    data.add(pie);
                 }
             }
+        }
 
-        PieDataSet set =new PieDataSet(data,"Expense data");
-            set.setColors(ColorTemplate.JOYFUL_COLORS);
-        PieData pData= new PieData(set);
+        PieDataSet set = new PieDataSet(data, "Expense data");
+        set.setColors(ColorTemplate.JOYFUL_COLORS);
+        PieData pData = new PieData(set);
         pData.setValueTextSize(20);
         expenseChart.setData(pData);
         expenseChart.animateY(1000);
@@ -133,16 +130,20 @@ public class DashboardScreen extends AppCompatActivity {
         getBudget();
     }
 
-    public void setScore(String budget)
-    {
-        double score=0;
-        for(int i=0;i<amountList.size();i++)
+    public void setScore(String budget) {
+        double score = 0;
+        for (int i = 0; i < amountList.size(); i++)
         {
-             score+=Double.parseDouble(amountList.get(i));
+            score += Double.parseDouble(amountList.get(i));
         }
-        score=score*Integer.parseInt(budget);
+        if (budget == null)
+        {
+    }
+        else { score = score * Integer.parseInt(budget);
         scoretext.setText(String.valueOf(score));
     }
+
+}
     public void getBudget()
     {
         DB.getfire().collection(email).document("Budget").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
